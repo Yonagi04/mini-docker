@@ -2,6 +2,7 @@ package container
 
 import (
 	"fmt"
+	"os"
 	"sync"
 	"time"
 )
@@ -112,6 +113,45 @@ func (c *Container) Remove() error {
 		return fmt.Errorf("无法删除运行中的容器")
 	}
 	c.Status = "removed"
+	return nil
+}
+
+func (c *Container) Cleanup() error {
+	// 如果容器正在运行，先停止它
+	if c.Status == "running" {
+		if err := c.Stop(); err != nil {
+			return fmt.Errorf("停止容器失败: %v", err)
+		}
+	}
+
+	// 清理工作目录
+	if c.WorkDir != "" {
+		if err := os.RemoveAll(c.WorkDir); err != nil {
+			return fmt.Errorf("清理工作目录失败: %v", err)
+		}
+	}
+
+	// 清理网络资源
+	if err := c.cleanupNetwork(); err != nil {
+		return fmt.Errorf("清理网络资源失败: %v", err)
+	}
+
+	// 清理卷
+	if err := c.cleanupVolumes(); err != nil {
+		return fmt.Errorf("清理卷失败: %v", err)
+	}
+
+	c.Status = "removed"
+	return nil
+}
+
+func (c *Container) cleanupNetwork() error {
+	// TODO: 实现网络资源清理
+	return nil
+}
+
+func (c *Container) cleanupVolumes() error {
+	// TODO: 实现卷清理
 	return nil
 }
 
