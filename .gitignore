@@ -1,0 +1,48 @@
+# 编译输出
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+mini-docker
+mini-docker.exe
+
+# 测试二进制文件
+*.test
+
+# 覆盖率工具生成的文件
+*.out
+*.prof
+
+# 依赖目录
+vendor/
+
+# IDE 相关
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 操作系统相关
+.DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
+
+# 临时文件
+tmp/
+temp/
+
+# 构建目录
+dist/
+build/
+
+# 环境变量文件
+.env
+.env.local
+
+# 调试文件
+debug
+debug.exe 
